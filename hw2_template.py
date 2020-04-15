@@ -50,14 +50,14 @@ def map_64():
 	plt.plot(x,y)
 	plt.show()
 
-#@cuda.jit(device = True)
+@cuda.jit(device = True)
 def f(x, r):
 	'''
 	Execute 1 iteration of the logistic map
 	'''
 	return r*x*(1 - x)
 
-#@cuda.jit
+@cuda.jit()
 def logistic_map_kernel(ss, r, x, transient, steady):
 	'''
 	Kernel for parallel iteration of logistic map
@@ -71,11 +71,20 @@ def logistic_map_kernel(ss, r, x, transient, steady):
 	'''
 
 	i = cuda.grid(1)
-	n = x.size	
+	n = r.size
+	y = np.zeros(steady, dtype = np.float32)	
 	if i < n:
 		# function body
-		pass
-	pass
+		x_old = x
+		for j in range(transient):
+			x_new = f(x_old,r[i])
+			x_old = x_new
+		for j in range(steady):
+			y[j] = x_old
+			x_new = f(x_old,r[i])
+			x_old = x_new
+		
+		ss[i] = y[i]
 
 def parallel_logistic_map(r, x, transient, steady):
 	'''
