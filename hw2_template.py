@@ -169,5 +169,11 @@ if __name__ == "__main__":
 	#numba.cuda.cudadrv.driver.CudaAPIError: [2] Call to cuMemAlloc results in CUDA_ERROR_OUT_OF_MEMORY
 	
 	#Problem 3
-
+	r = np.linspace(0,4,100)
+	x = 0
+	transient = 100
+	steady = 8
+	ss = parallel_logistic_map(r, x, transient, steady)
+	# Bug issue: Use of unsupported NumPy function 'numpy.zeros' or unsupported use of the function.
+	
 	#Problem 4
