@@ -267,7 +267,7 @@ if __name__ == "__main__":
 	#Problem 2
 
 	#The largest array allowed is 134217728 by hand caculation. However, in real world, it can only afford 110501888
-	#map_64()
+	map_64()
 
 	#PASTE YOUR ERROR MESSAGES HERE#
 	#numba.cuda.cudadrv.driver.CudaAPIError: [2] Call to cuMemAlloc results in CUDA_ERROR_OUT_OF_MEMORY
